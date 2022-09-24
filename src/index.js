@@ -28,7 +28,7 @@ route(app)
 connect
     .then(()=>{
         console.log('connect to DB')
-        app.listen(PORT,()=>{console.log("successfully")})
+        app.listen(PORT,()=>{console.log("successfully",PORT)})
     })
     .catch(err=>{console.log("error:" , err)})
 

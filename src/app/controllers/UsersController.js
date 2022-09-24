@@ -5,7 +5,7 @@ class UsersController {
     show(req, res, next) {
         
         Users.find({})
-            .then(users =>res.status(200).json(users))
+            .then(users =>res.status(200).json({data:users}))
             .catch(next)
         
     }
@@ -20,12 +20,16 @@ class UsersController {
                 console.log(nickname)
                 const users=[...fullname,...nickname];
                 
-                const result =users.reduce((acc, user) => {
+                
+                const mySet=new Set(users.reduce((acc, user) => {
                     
                     
                     return [...acc,user._id]
-                },[])
-                Users.find({_id:{$in:result}}).limit(req.query.less)
+                },[]))
+                const result =[...mySet]
+
+
+                Users.find({_id:{$in:result}}).limit(req.query.type==="less"?3:5)
                     .then(users =>res.send({data:users}))
                     .catch(err =>console.log(err))
             })
